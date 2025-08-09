@@ -21,6 +21,9 @@ function useGroq(messages, model = "llama-3.3-70b-versatile") {
                     max_completion_tokens: 1024,
                     top_p: 1,
                     stream: true,
+                    if(model = 'openai/gpt-oss-20b'){
+                        reasoning_effort: "medium"
+                    }
                 });
 
                 let fullResponse = "";
