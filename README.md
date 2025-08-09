@@ -2,6 +2,7 @@
 
 A lightweight, responsive chat interface powered by the [Groq API](https://groq.com/) for blazing-fast large language model responses.
 Built with **React** and **Tailwind CSS**, this app supports multiple Groq models, persistent chat history, and a clean UI.
+To check out the deployed app<a href = "https://llm-chat-mu.vercel.app/"> Click here</a>
 
 ---
 
