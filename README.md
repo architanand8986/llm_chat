@@ -51,7 +51,7 @@ To check out the deployed app <a href = "https://llm-chat-mu.vercel.app/">Click 
    Create a `.env` file in the root directory:
 
    ```env
-   NEXT_PUBLIC_GROQ_API_KEY=your_api_key_here
+   VITE_GROQ_API_KEY=your_api_key_here
    ```
 
 4. **Run the app**
