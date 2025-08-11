@@ -1,4 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css";
 import useChat from "../hooks/useChat";
 import ModelSelection from "./ModelSelection";
 import { DEFAULT_MODEL } from "../utils/constants";
@@ -8,7 +13,6 @@ const ChatWindow = () => {
   const { prompt, setPrompt, messages, sendPrompt } = useChat(selectedModel);
   const messagesEndRef = useRef(null);
 
-  // Auto-scroll on message update
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -19,6 +23,9 @@ const ChatWindow = () => {
     e.preventDefault();
     sendPrompt();
   };
+
+  // Helper to replace <br> with \n for Markdown
+  const formatMessage = (content) => content.replace(/<br\s*\/?>/gi, "\n");
 
   return (
     <div className="w-screen h-screen bg-gray-950 flex flex-col items-center justify-center text-gray-100">
@@ -48,13 +55,18 @@ const ChatWindow = () => {
                 }`}
               >
                 <div
-                  className={`px-5 py-3 rounded-2xl max-w-[80%] break-words ${
+                  className={`px-5 py-3 rounded-2xl max-w-[80%] break-words prose prose-invert ${
                     msg.role === "user"
-                      ? "bg-blue-600 text-white"
+                      ? "bg-blue-600 text-white prose-p:my-0"
                       : "bg-gray-800 text-gray-200"
                   }`}
                 >
-                  {msg.content}
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm, remarkMath]}
+                    rehypePlugins={[rehypeKatex]}
+                  >
+                    {formatMessage(msg.content)}
+                  </ReactMarkdown>
                 </div>
               </div>
             ))
